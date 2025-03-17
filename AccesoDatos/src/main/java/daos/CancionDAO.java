@@ -6,8 +6,8 @@ package daos;
 
 import conexion.Conexion;
 import conexion.IConexion;
-import entidades.CancionEntidad;
 import excepciones.PersistenciaException;
+import itson.entidades.CancionEntidad;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -77,9 +77,9 @@ public class CancionDAO implements ICancionDAO {
 
             // Verificamos si la entidad existe en la base de datos antes de eliminarla.
             if (cancionManaged != null) {
-                em.merge(cancion); // Eliminamos la entidad gestionada.
+                em.merge(cancion); // Actualizamos la entidad gestionada.
                 em.getTransaction().commit();
-                logger.log(Level.INFO, "Se ha eliminado la canción correctamente.");
+                logger.log(Level.INFO, "Se ha actualizado la canción correctamente.");
             } else {
                 em.getTransaction().rollback();
                 throw new PersistenciaException("La entidad no existe en la base de datos.");

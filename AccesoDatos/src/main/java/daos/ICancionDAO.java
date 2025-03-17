@@ -4,8 +4,8 @@
  */
 package daos;
 
-import entidades.CancionEntidad;
 import excepciones.PersistenciaException;
+import itson.entidades.CancionEntidad;
 import java.util.List;
 
 /**

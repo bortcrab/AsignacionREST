@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package entidades;
+package itson.entidades;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -38,7 +38,7 @@ public class CancionEntidad implements Serializable {
     @Column(name = "album", nullable = false)
     private String album;
 
-    @Column(name = "fecha_lanzamiento", nullable = true)
+    @Column(name = "fecha_lanzamiento", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar fechaLanzamiento;
 
