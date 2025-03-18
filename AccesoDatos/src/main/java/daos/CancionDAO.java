@@ -25,7 +25,7 @@ import java.util.logging.Logger;
  */
 public class CancionDAO implements ICancionDAO {
 
-    private final IConexion conexion = new Conexion();
+    private IConexion conexion = new Conexion();
     private static final Logger logger = Logger.getLogger(CancionDAO.class.getName());
 
     /**
@@ -104,13 +104,13 @@ public class CancionDAO implements ICancionDAO {
      * @throws PersistenciaException si ocurre algún error.
      */
     @Override
-    public CancionEntidad borrarCancion(CancionEntidad cancion) throws PersistenciaException {
+    public CancionEntidad borrarCancion(String id) throws PersistenciaException {
         try {
             // Creamos un entity manager.
             EntityManager em = conexion.crearConexion();
 
             // Adjuntamos la entidad al contexto de persistencia.
-            CancionEntidad cancionManaged = em.find(CancionEntidad.class, cancion.getId());
+            CancionEntidad cancionManaged = em.find(CancionEntidad.class, Long.valueOf(id));
 
             // Verificamos si la entidad existe en la base de datos antes de eliminarla.
             if (cancionManaged != null) {
@@ -120,8 +120,6 @@ public class CancionDAO implements ICancionDAO {
                 em.getTransaction().commit();
 
                 logger.log(Level.INFO, "Se ha eliminado la canción correctamente.");
-            } else {
-                return null;
             }
 
             // Cerramos el entity manager.
@@ -130,7 +128,7 @@ public class CancionDAO implements ICancionDAO {
             // Imprimimos un mensaje de que se actualizó una canción.
             logger.log(Level.INFO, "Se ha actualizado 1 cancion correctamente.");
 
-            return cancion;
+            return cancionManaged;
         } catch (Exception e) {
             throw new PersistenciaException("Ocurrió algún error durante el borrado. Error " + e.getMessage());
         }

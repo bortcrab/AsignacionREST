@@ -48,7 +48,7 @@ public class NewMain {
             imprimirLista(canciones);
 
             System.out.println("BORRAR CANCION");
-            dao.borrarCancion(cancion1);
+            dao.borrarCancion("1");
             canciones = dao.obtenerCanciones();
             imprimirLista(canciones);
         } catch (PersistenciaException ex) {

@@ -38,7 +38,7 @@ public interface ICancionDAO {
      * @param cancion Canción a ser borrada.
      * @throws PersistenciaException si ocurre algún error.
      */
-    public CancionEntidad borrarCancion(CancionEntidad cancion) throws PersistenciaException;
+    public CancionEntidad borrarCancion(String id) throws PersistenciaException;
 
     /**
      * Obtiene una canción dado un ID.
