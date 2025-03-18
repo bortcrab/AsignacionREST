@@ -8,14 +8,14 @@ import conexion.Conexion;
 import conexion.IConexion;
 import excepciones.PersistenciaException;
 import itson.entidades.CancionEntidad;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 
 /**
  * Clase que implementa la interfaz ICancionDAO y define los métodos para
@@ -64,25 +64,25 @@ public class CancionDAO implements ICancionDAO {
      * @throws PersistenciaException si ocurre algún error.
      */
     @Override
-    public void actualizarCancion(CancionEntidad cancion) throws PersistenciaException {
+    public CancionEntidad actualizarCancion(CancionEntidad cancion) throws PersistenciaException {
         try {
             // Creamos un entity manager.
             EntityManager em = conexion.crearConexion();
-
-            // Iniciamos la transacción.
-            em.getTransaction().begin();
 
             // Adjuntamos la entidad al contexto de persistencia.
             CancionEntidad cancionManaged = em.find(CancionEntidad.class, cancion.getId());
 
             // Verificamos si la entidad existe en la base de datos antes de eliminarla.
             if (cancionManaged != null) {
+                // Iniciamos la transacción.
+                em.getTransaction().begin();
                 em.merge(cancion); // Actualizamos la entidad gestionada.
                 em.getTransaction().commit();
+
                 logger.log(Level.INFO, "Se ha actualizado la canción correctamente.");
+                cancion = em.find(CancionEntidad.class, cancion.getId());
             } else {
-                em.getTransaction().rollback();
-                throw new PersistenciaException("La entidad no existe en la base de datos.");
+                return null;
             }
 
             // Cerramos el entity manager.
@@ -90,6 +90,8 @@ public class CancionDAO implements ICancionDAO {
 
             // Imprimimos un mensaje de que se actualizó una canción.
             logger.log(Level.INFO, "Se ha actualizado 1 cancion correctamente.");
+
+            return cancion;
         } catch (Exception e) {
             throw new PersistenciaException("Ocurrió algún error durante la actualización. Error " + e.getMessage());
         }
@@ -102,25 +104,24 @@ public class CancionDAO implements ICancionDAO {
      * @throws PersistenciaException si ocurre algún error.
      */
     @Override
-    public void borrarCancion(CancionEntidad cancion) throws PersistenciaException {
+    public CancionEntidad borrarCancion(CancionEntidad cancion) throws PersistenciaException {
         try {
             // Creamos un entity manager.
             EntityManager em = conexion.crearConexion();
-
-            // Iniciamos la transacción.
-            em.getTransaction().begin();
 
             // Adjuntamos la entidad al contexto de persistencia.
             CancionEntidad cancionManaged = em.find(CancionEntidad.class, cancion.getId());
 
             // Verificamos si la entidad existe en la base de datos antes de eliminarla.
             if (cancionManaged != null) {
+                // Iniciamos la transacción.
+                em.getTransaction().begin();
                 em.remove(cancionManaged); // Eliminamos la entidad gestionada.
                 em.getTransaction().commit();
+
                 logger.log(Level.INFO, "Se ha eliminado la canción correctamente.");
             } else {
-                em.getTransaction().rollback();
-                throw new PersistenciaException("La entidad no existe en la base de datos.");
+                return null;
             }
 
             // Cerramos el entity manager.
@@ -128,6 +129,8 @@ public class CancionDAO implements ICancionDAO {
 
             // Imprimimos un mensaje de que se actualizó una canción.
             logger.log(Level.INFO, "Se ha actualizado 1 cancion correctamente.");
+
+            return cancion;
         } catch (Exception e) {
             throw new PersistenciaException("Ocurrió algún error durante el borrado. Error " + e.getMessage());
         }

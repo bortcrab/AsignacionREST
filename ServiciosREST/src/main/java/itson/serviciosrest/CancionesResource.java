@@ -15,14 +15,13 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.Path;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * REST Web Service
@@ -91,12 +90,12 @@ public class CancionesResource {
     }
 
     /**
-     * Método para añadir una canción.
+     * Método para actualizar una canción.
      *
-     * @param cancion Canción a añadir.
-     * @return La canción añadida.
+     * @param cancion Canción a actualizar.
+     * @return La canción actualizada.
      */
-    @POST
+    @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response editCancion(CancionEntidad cancion) {
@@ -105,6 +104,9 @@ public class CancionesResource {
         // Campos de la solicitud que podrían presentar errores.
         StringBuilder camposErroneos = new StringBuilder();
 
+        if (cancion.getId()== null) {
+            camposErroneos.append("ID, ");
+        }
         if (cancion.getTitulo() == null) {
             camposErroneos.append("Título, ");
         }
@@ -129,11 +131,68 @@ public class CancionesResource {
         }
 
         try {
-            dao.insertarCancion(cancion);
+            CancionEntidad resultado = dao.actualizarCancion(cancion);
+            if (resultado != null) {
+                return Response.status(200).entity(cancion).build();
+            } else {
+                return Response.status(404).entity("No se encontró la canción que quiere actualizar.").build();
+            }
         } catch (PersistenciaException ex) {
             return Response.status(500).entity("Sucedió un error en el servidor").build();
         }
-        return Response.status(200).entity(cancion).build();
+    }
+    
+    /**
+     * Método para borrar una canción.
+     *
+     * @param cancion Canción a borrar.
+     * @return La canción borrada.
+     */
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteCancion(CancionEntidad cancion) {
+        // Mensaje del error.
+        StringBuilder mensajeError = new StringBuilder("Error: Los siguientes campos son obligatorios: ");
+        // Campos de la solicitud que podrían presentar errores.
+        StringBuilder camposErroneos = new StringBuilder();
+
+        if (cancion.getId() == null) {
+            camposErroneos.append("ID, ");
+        }
+        if (cancion.getTitulo() == null) {
+            camposErroneos.append("Título, ");
+        }
+        if (cancion.getArtista() == null) {
+            camposErroneos.append("Artista, ");
+        }
+        if (cancion.getAlbum() == null) {
+            camposErroneos.append("Álbum, ");
+        }
+        if (cancion.getFechaLanzamiento() == null) {
+            camposErroneos.append("Fecha de lanzamiento, ");
+        }
+
+        // Si hubo campos con errores.
+        if (camposErroneos.length() > 0) {
+            // Los agregamos al mensaje.
+            mensajeError.append(camposErroneos);
+            // Elimina la última coma y espacio
+            mensajeError.setLength(mensajeError.length() - 2);
+
+            return Response.status(400).entity(mensajeError.toString()).build();
+        }
+
+        try {
+            CancionEntidad resultado = dao.borrarCancion(cancion);
+            if (resultado != null) {
+                return Response.status(200).entity(cancion).build();
+            } else {
+                return Response.status(404).entity("No se encontró la canción que quiere borrar.").build();
+            }
+        } catch (PersistenciaException ex) {
+            return Response.status(500).entity("Sucedió un error en el servidor").build();
+        }
     }
 
     /**

@@ -30,7 +30,7 @@ public interface ICancionDAO {
      * @param cancion Canción a ser actualizada.
      * @throws PersistenciaException si ocurre algún error.
      */
-    public void actualizarCancion(CancionEntidad cancion) throws PersistenciaException;
+    public CancionEntidad actualizarCancion(CancionEntidad cancion) throws PersistenciaException;
 
     /**
      * Método que elimina una cancion de la base de datos.
@@ -38,7 +38,7 @@ public interface ICancionDAO {
      * @param cancion Canción a ser borrada.
      * @throws PersistenciaException si ocurre algún error.
      */
-    public void borrarCancion(CancionEntidad cancion) throws PersistenciaException;
+    public CancionEntidad borrarCancion(CancionEntidad cancion) throws PersistenciaException;
 
     /**
      * Obtiene una canción dado un ID.

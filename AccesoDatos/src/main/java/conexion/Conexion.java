@@ -4,9 +4,9 @@
  */
 package conexion;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 
 /**
  * Clase con la implementación de la interfaz IConexion para crear una conexión
@@ -24,7 +24,7 @@ public class Conexion implements IConexion {
     @Override
     public EntityManager crearConexion() {
         // Creamos el EntityManagerFactory.
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ConexionJPA_rest");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ConexionPU");
         // Creamos el EntityManager.
         EntityManager em = emf.createEntityManager();
 

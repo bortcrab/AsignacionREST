@@ -4,7 +4,7 @@
  */
 package conexion;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 
 /**
  * Interfaz con los métodos necesarios para crear conexiones con la base de
