@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-  <Resource id="jdbc:mysql://localhost:3306/bd_rest?zeroDateTimeBehavior=CONVERT_TO_NULL" type="javax.sql.DataSource">#Mon Mar 17 18:52:08 MST 2025
+  <!--  <Resource id="jdbc:mysql://localhost:3306/bd_rest?zeroDateTimeBehavior=CONVERT_TO_NULL" type="javax.sql.DataSource">#Mon Mar 17 18:52:08 MST 2025
 jdbcDriver=com.mysql.cj.jdbc.Driver
 jdbcUrl=jdbc\:mysql\://localhost\:3306/bd_rest?zeroDateTimeBehavior\=CONVERT_TO_NULL
-password=root
+password=CheemSITO357
+userName=root
+</Resource>-->
+  <Resource id="ConexionPU" type="javax.sql.DataSource">#Tue Mar 18 03:48:28 MST 2025
+jdbcDriver=com.mysql.cj.jdbc.Driver
+jdbcUrl=jdbc\:mysql\://localhost\:3306/mysql?zeroDateTimeBehavior\=CONVERT_TO_NULL
+password=CheemSITO357
 userName=root
 </Resource>
 </resources>

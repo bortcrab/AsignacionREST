@@ -39,8 +39,7 @@ public class CancionEntidad implements Serializable {
     private String album;
 
     @Column(name = "fecha_lanzamiento", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Calendar fechaLanzamiento;
+    private String fechaLanzamiento;
 
     /**
      * Constructor vacío.
@@ -56,7 +55,7 @@ public class CancionEntidad implements Serializable {
      * @param album Album al que pertenece la canción.
      * @param fechaLanzamiento Fecha en que se lanzó.
      */
-    public CancionEntidad(String titulo, String artista, String album, Calendar fechaLanzamiento) {
+    public CancionEntidad(String titulo, String artista, String album, String fechaLanzamiento) {
         this.titulo = titulo;
         this.artista = artista;
         this.album = album;
@@ -95,11 +94,11 @@ public class CancionEntidad implements Serializable {
         this.album = album;
     }
 
-    public Calendar getFechaLanzamiento() {
+    public String getFechaLanzamiento() {
         return fechaLanzamiento;
     }
 
-    public void setFechaLanzamiento(Calendar fechaLanzamiento) {
+    public void setFechaLanzamiento(String fechaLanzamiento) {
         this.fechaLanzamiento = fechaLanzamiento;
     }
 
@@ -131,7 +130,7 @@ public class CancionEntidad implements Serializable {
                 titulo,
                 artista,
                 album,
-                fechaLanzamiento != null ? new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(fechaLanzamiento.getTime()) : null
+                fechaLanzamiento
         );
     }
 }

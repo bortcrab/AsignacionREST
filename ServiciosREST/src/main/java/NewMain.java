@@ -24,8 +24,8 @@ public class NewMain {
             ICancionDAO dao = new CancionDAO();
             List<CancionEntidad> canciones;
 
-            CancionEntidad cancion1 = new CancionEntidad("Doom City", "King Gizzard & The Lizard Wizard", "Flying Microtonal Banana", new GregorianCalendar(2010, 10, 10));
-            CancionEntidad cancion2 = new CancionEntidad("Mind Alone", "Entheos", "The Infinite Nothing", new GregorianCalendar(2016, 4, 1));
+            CancionEntidad cancion1 = new CancionEntidad("Doom City", "King Gizzard & The Lizard Wizard", "Flying Microtonal Banana", "27-11-04");
+            CancionEntidad cancion2 = new CancionEntidad("Mind Alone", "Entheos", "The Infinite Nothing", "27-11-04");
 
             System.out.println("INSERTAR CANCION");
             dao.insertarCancion(cancion1);
@@ -34,7 +34,7 @@ public class NewMain {
             imprimirLista(canciones);
 
             System.out.println("ACTUALIZAR CANCION");
-            cancion1.setFechaLanzamiento(new GregorianCalendar(2017, 2, 27));
+            cancion1.setFechaLanzamiento("27-11-04");
             dao.actualizarCancion(cancion1);
             canciones = dao.obtenerCanciones();
             imprimirLista(canciones);
